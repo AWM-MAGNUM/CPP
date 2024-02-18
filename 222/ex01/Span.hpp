@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <stdexcept>
+#include <iostream>
+
 
 class Span {
 private:
@@ -18,7 +20,13 @@ public:
     Span(unsigned int N);
     ~Span();
     void addNumber(int number);
-    void addAllNumbers(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end);
+    template <typename T>
+    void addAllNumber(T start, T finish)
+    {
+        for (T it = start; it != finish; ++it)
+            addNumber(*it);
+    }
+    void display() const;
     int shortestSpan() const;
     int longestSpan() const;
 

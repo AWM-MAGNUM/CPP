@@ -5,37 +5,35 @@
 #include <stack>
 #include <deque>
 
-template <typename T>
-class MutantStack : public std::stack<T> {
-    public:
-        typedef typename std::deque<T>::iterator iterator;
-        typedef typename std::deque<T>::const_iterator const_iterator;
+template <typename T, typename Container = std::deque<T> >
+class MutantStack : public std::stack<T, Container> {
+public:
+    typedef typename Container::iterator iterator;
 
-        MutantStack() : std::stack<T>() {}
-        MutantStack(const MutantStack& obj) : std::stack<T>(obj) {}
-        MutantStack& operator=(const MutantStack& obj) 
-        {
-            if (this != &obj)
-                std::stack<T>::operator=(obj);
-            return *this;
-        }
-        ~MutantStack() {}
+    MutantStack() : std::stack<T, Container>() {}
 
-        iterator begin() 
-        { 
-            return this->c.begin(); 
-        }
-        iterator end() 
-        { 
-            return this->c.end(); 
-        }
-        const_iterator begin() const 
-        { 
-            return this->c.begin(); 
-        }
-        const_iterator end() const 
-        { 
-            return this->c.end(); 
-        }
+    // Constructeur de copie
+    MutantStack(const MutantStack& obj) : std::stack<T, Container>(obj) {}
+
+    // Opérateur d'affectation
+    MutantStack& operator=(const MutantStack& obj) {
+        if (this != &obj)
+            std::stack<T, Container>::operator=(obj);
+        return *this;
+    }
+
+    // Destructeur
+    ~MutantStack() {}
+    
+    // Renvoie un iterateur pointant sur le premier element du stack
+    iterator begin() {
+        return std::stack<T, Container>::c.begin();
+    }
+
+    // Renvoie un iterateur pointant après le dernier element du stack
+    iterator end() {
+        return std::stack<T, Container>::c.end();
+    }
 };
+
 #endif

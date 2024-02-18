@@ -1,4 +1,5 @@
 #include "Span.hpp"
+#include <iostream>
 
 Span::Span() : capacity(0) {}
 
@@ -13,13 +14,11 @@ void Span::addNumber(int num)
     data.push_back(num);
 }
 
-void Span::addAllNumbers(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end)
+void Span::display() const
 {
-    while (begin != end)
-    {
-        addNumber(*begin);
-        ++begin;
-    }
+    for(unsigned int i = 0; i < data.size(); i++)
+        std::cout << " " << data.at(i);
+    std::cout << std::endl;
 }
 
 int Span::shortestSpan() const 
@@ -37,7 +36,7 @@ int Span::shortestSpan() const
         if(Diff < smallDiff)
             smallDiff = Diff;
     }
-    return smallDiff;
+    return abs(smallDiff);
 }
 
 int Span::longestSpan() const 
@@ -49,6 +48,6 @@ int Span::longestSpan() const
     std::sort(sortedData.begin(), sortedData.end());
 
     int largDiff = sortedData.back() - sortedData.front();
-    return largDiff;
+    return abs(largDiff);
 }
 
